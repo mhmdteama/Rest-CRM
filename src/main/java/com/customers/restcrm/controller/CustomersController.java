@@ -3,7 +3,6 @@ package com.customers.restcrm.controller;
 import com.customers.restcrm.entity.Customer;
 import com.customers.restcrm.errors.CustomerNotFoundException;
 import com.customers.restcrm.services.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +16,13 @@ public class CustomersController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/customer")
+    @GetMapping("/getAllCustomers")
     public List<Customer> getCustomerList()
     {
         return customerService.getCustomers();
     }
 
-    @GetMapping("/customer/{customerId}")
+    @GetMapping("/customerById/{customerId}")
     public Customer getCustomer(@PathVariable int customerId)
     {
         if (customerId >= customerService.getCustomers().size() || customerId<0)
@@ -32,7 +31,7 @@ public class CustomersController {
         }
         return customerService.getCustomerByID(customerId);
     }
-    @PostMapping("/customer")
+    @PostMapping("/addCustomer")
     public Customer save(@RequestBody Customer customer)
     {
         customer.setId(0);
@@ -40,14 +39,14 @@ public class CustomersController {
         return customer;
     }
 
-    @PutMapping("/customer")
+    @PutMapping("/updateCustomer")
     public Customer update(@RequestBody Customer customer)
     {
         customerService.update(customer);
         return customer;
     }
 
-    @DeleteMapping("/customer/{deleteId}")
+    @DeleteMapping("/deleteCustomer/{deleteId}")
     public String delete(@PathVariable int deleteId)
     {
         customerService.delete(deleteId);
